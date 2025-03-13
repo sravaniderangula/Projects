@@ -77,6 +77,22 @@ pool.connect().then(() => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost${PORT}`);
 });
+
+app.get('/get/categories', async (req, resp) => {
+    try {
+
+        const result = await pool.query('Select * from Categories');
+        if (result.rows.length > 0) {
+            return resp.status(200).json({ categories:result.rows })
+        } else {
+            return resp.status(400).json({ message: "No Products exists" })
+        }
+
+    } catch (error) {
+        console.log("error", error.message);
+        return resp.status(500).json({ message: "Internal Server Error" })
+    }
+})
 app.get('/get/products', async (req, resp) => {
     try {
 
@@ -92,6 +108,7 @@ app.get('/get/products', async (req, resp) => {
         return resp.status(500).json({ message: "Internal Server Error" })
     }
 })
+
 app.post('/add/product', authenticateToken, authenticateUser, async (req, resp) => {
     console.log(req.role)
 
@@ -116,6 +133,26 @@ app.post('/add/product', authenticateToken, authenticateUser, async (req, resp) 
         return resp.status(500).json({ message: "Internal Server Error" })
     }
 });
+
+app.get('/get/product/:id', async (req, resp) => {
+    try {
+        const id = parseInt(req.params.id);
+        const result = await pool.query(`Select * from Products where id=$1`,[id]);
+        if (result.rows.length === 0) {
+            return resp.status(400).json({ message: "No Products exists" })
+        }
+        const product=result.rows[0];
+        const reviewQuery= 'Select re.id,re.rating,re.comment,us.name from Reviews re Join Users us on re.user_id=us.id where re.product_id=$1';
+        const reviewData=await pool.query(reviewQuery,[id]);
+        const reviews=reviewData.rows.length>0?reviewData.rows:[];
+        return resp.status(200).json({"product":product,"reviews":reviews})
+
+
+    } catch (error) {
+        console.log("error", error.message);
+        return resp.status(500).json({ message: "Internal Server Error" })
+    }
+})
 
 
 app.put('/update/product/:id', async (req, resp) => {
@@ -261,7 +298,7 @@ const fetchProduct = async () => {
 };
 
 
-fetchProduct();
+// fetchProduct();
 
 
 async function addSmartPhone(title, description, price, category_id, stock, images, rating) {

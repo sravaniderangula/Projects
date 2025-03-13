@@ -21,21 +21,26 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        // console.log(userDetails);
+
         setError("");
         setMessage("");
         try {
             const response = await login(userDetails);
             const data = await response.json();
+            console.log("response from api",data)
 
             if (!response.ok) {
                 setError(data.message || "Error during Login. Please Try again Later");
                 return;
             }
-            setMessage("Login Successful! Redirecting...");
+            setMessage("Login Successful! Redirecting to HomePage...");
             localStorage.setItem("user", JSON.stringify(data.user));
             loginUser(data.user,data.token);
-            //   setTimeout(() => navigate("/dashboard"), 2000);
+              setTimeout(() => navigate("/home"), 2000);
         } catch (error) {
+            console.log("response from api",error)
+
             setError("Internal Server Error. Please try again later.");
         }
     };
@@ -60,7 +65,7 @@ export default function Login() {
                     className="w-full p-3 my-2 border rounded"
                     required
                 />
-                <button type="submit" className="bg-blue-500 text-white w-full p-3 rounded">
+                <button type="submit" className="bg-blue-500 text-white w-full p-3 rounded  transition-transform duration-150 active:scale-90 active:bg-blue-900">
                     Login
                 </button>
             </form>

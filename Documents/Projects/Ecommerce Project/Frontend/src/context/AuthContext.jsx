@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 
-export const AuthContext = createContext();  // Ensure named export
-
+export const AuthContext = createContext();  
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
@@ -34,7 +33,7 @@ export default function AuthProvider({ children }) {
         if (!token) return true;
 
         try {
-            const payload = JSON.parse(atob(token.split(".")[1]));  // Fix atob usage
+            const payload = JSON.parse(atob(token.split(".")[1]));
             return payload.exp * 1000 < Date.now();
         } catch (error) {
             return true;

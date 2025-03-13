@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import LogoIcon from '../assets/logo.svg';
 import HomeIcon from '../assets/home.svg';
-import ProductIcon from '../assets/product.svg';
+// import ProductIcon from '../assets/product.svg';
 import CartIcon from '../assets/cart.svg';
 import WishlistIcon from '../assets/wishlist.svg';
 import MenuIcon from '../assets/menu.svg';
@@ -20,8 +20,8 @@ export default function Navbar() {
     }, [logoutUser, isTokenExpired]);
 
     return (
-        <nav className='bg-gray-900 text-white p-4'>
-            <div className='flex justify-between items-center'>
+        <nav style={{position:"sticky",top:"0"}} className='bg-gray-900 text-white p-6'>
+            <div  className='flex justify-between items-center'>
                 {/* Logo */}
                 <Link to='/home' className='font-bold text-2xl flex items-center'>
                     <img src={LogoIcon} alt="logo" className='w-6 h-6 mr-4 text-white' />
@@ -34,10 +34,10 @@ export default function Navbar() {
                         <img src={HomeIcon} alt='Home' className='w-5 h-5 mr-2 text-white' />
                         Home
                     </Link>
-                    <Link to='/product' className='text-lg font-bold flex items-center hover:text-gray-300'>
+                    {/* <Link to='/product' className='text-lg font-bold flex items-center hover:text-gray-300'>
                         <img src={ProductIcon} alt='Product' className='w-5 h-5 mr-2 text-white' />
                         Products
-                    </Link>
+                    </Link> */}
                     <Link to='/wishlist' className='text-lg font-bold flex items-center hover:text-gray-300'>
                         <img src={WishlistIcon} alt='Wishlist' className='w-5 h-5 mr-2 text-red-600' />
                         Wishlist
@@ -76,10 +76,10 @@ export default function Navbar() {
                         <img src={HomeIcon} alt='Home' className='w-5 h-5 mr-2' />
                         Home
                     </Link>
-                    <Link to='/product' className='text-lg font-bold flex items-center hover:text-gray-300'>
+                    {/* <Link to='/product' className='text-lg font-bold flex items-center hover:text-gray-300'>
                         <img src={ProductIcon} alt='Product' className='w-5 h-5 mr-2' />
                         Products
-                    </Link>
+                    </Link> */}
                     <Link to='/wishlist' className='text-lg font-bold flex items-center hover:text-gray-300'>
                         <img src={WishlistIcon} alt='Wishlist' className='w-5 h-5 mr-2' />
                         Wishlist

@@ -1,0 +1,11 @@
+import express from "express";
+import  {getCategories,getAllProducts,addSingleProduct,getSingleProduct,updateProduct,deleteSingleProduct} from '../controllers/productController.js';
+import {authenticateToken,authenticateUser} from "../middleware/authMiddleware.js";
+const router=express.Router();
+router.get('/get/products',getAllProducts);
+router.get('/get/categories',getCategories);
+router.post('/add/product',authenticateToken,authenticateUser,addSingleProduct);
+router.get('/get/product/:id',getSingleProduct);
+router.put('/update/product/:id',authenticateToken,authenticateUser,updateProduct);
+router.delete('/delete/product/:id',authenticateToken,authenticateUser,deleteSingleProduct);
+export default router;

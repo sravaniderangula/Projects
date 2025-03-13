@@ -7,7 +7,7 @@ export default function SignUp() {
         name: "",
         email: "",
         password: "",
-        phone: "",
+        phone_number: "",
         address: "",
         role: ""
     });
@@ -25,6 +25,7 @@ export default function SignUp() {
         e.preventDefault();
         try {
             const response = await signup(userDetails);
+            // console.log(userDetails);
             const data = await response.json();
             if (!response.ok) {
                 setError("Error during Registration. Please try again later.");
@@ -38,7 +39,7 @@ export default function SignUp() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center mx-auto w-full max-w-lg h-screen">
+        <div className="flex flex-col justify-center items-center mx-auto w-full max-w-lg h-screen -mt-20 ">
             <form onSubmit={handleSignUp} className="bg-white p-4 border rounded-md shadow-lg">
                 <input
                     type="text"
@@ -66,8 +67,8 @@ export default function SignUp() {
                 />
                 <input
                     type="tel"
-                    name="phone"
-                    value={userDetails.phone}
+                    name="phone_number"
+                    value={userDetails.phone_number}
                     placeholder="Enter your mobile number"
                     onChange={handleChange}
                     className="w-full p-4 my-2 border rounded"
@@ -88,9 +89,10 @@ export default function SignUp() {
                 >
                     <option value="">Select Your Role</option>
                     <option value="admin">Admin</option>
-                    <option value="customer">Customer</option>
+                    <option value="user">Customer</option>
                 </select>
-                <button type="submit" className="bg-blue-500 text-white w-full p-2 rounded">
+                <button type="submit" className="bg-blue-500 text-white w-full p-2 rounded
+                transition-transform duration-150 active:scale-90 active:bg-blue-900">
                     Register
                 </button>
             </form>
